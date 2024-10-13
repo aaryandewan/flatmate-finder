@@ -18,6 +18,11 @@ export async function POST(req: NextRequest) {
 
     // Destructure form data
     const { city, rent, genderPreference, description, images } = body;
+    const postedBy = {
+      name: "aaryan",
+      email: "aaryandewan@google.com",
+      contactNumber: "9475756361",
+    };
 
     // Connect to MongoDB
     await dbConnect();
@@ -30,6 +35,7 @@ export async function POST(req: NextRequest) {
       genderPreference,
       description,
       images, // Array of image URLs
+      postedBy,
     });
 
     // Save the ad in MongoDB
