@@ -1,6 +1,8 @@
 // // src/app/page.tsx
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
+
 import HomeClient from "./components/HomeClient";
 import { signIn, signOut } from "next-auth/react";
 import { redirect } from "next/navigation";

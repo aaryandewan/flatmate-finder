@@ -1,6 +1,8 @@
 // src/app/profile/page.tsx
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
+
 import { redirect } from "next/navigation"; // For redirecting users
 
 export default async function Profile() {
