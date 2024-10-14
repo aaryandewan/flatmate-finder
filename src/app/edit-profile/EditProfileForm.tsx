@@ -6,6 +6,13 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import {
   Form,
@@ -189,12 +196,33 @@ export default function EditProfileForm({ user }: { user: any }) {
                   <FormItem>
                     <FormLabel>Location</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your location" {...field} />
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value || undefined}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select your city" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {[
+                            "Delhi",
+                            "Noida",
+                            "Mumbai",
+                            "Pune",
+                            "Bangalore",
+                          ].map((city) => (
+                            <SelectItem key={city} value={city}>
+                              {city}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="hobbies"

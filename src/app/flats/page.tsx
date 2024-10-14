@@ -15,8 +15,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton"; // Import Shadcn Skeleton
+import { useSession } from "next-auth/react"; // For fetching session data
 
 export default function FlatsPage() {
+  const { data: session } = useSession();
   const [filters, setFilters] = useState({
     gender: "",
     city: "",
@@ -43,6 +45,24 @@ export default function FlatsPage() {
       setLoading(false); // Stop loading once the data is fetched
     }
   };
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (session) {
+        try {
+          // Assuming you have an endpoint to get the logged-in user profile
+          const response = await axios.get(`/api/users/${session?.user?.id}`);
+          const userCity = response.data.data.location || "Delhi"; // Fallback to 'Delhi' if city is not available
+          setFilters((prev) => ({ ...prev, city: userCity }));
+        } catch (error) {
+          console.error("Error fetching user profile:", error);
+        }
+      } else {
+        setFilters((prev) => ({ ...prev, city: "Delhi" })); // Default city if no session found
+      }
+    };
+
+    fetchUserProfile();
+  }, [session]);
 
   // Fetch all flats in a city when the city changes
   useEffect(() => {
@@ -50,7 +70,7 @@ export default function FlatsPage() {
       setLoading(true); // Show loading state when the page loads
       try {
         const response = await axios.get("/api/flats", {
-          params: { city: "Delhi" },
+          params: { city: filters.city },
         });
         setDisplayedFlats(response.data.flats);
       } catch (error) {
@@ -60,12 +80,12 @@ export default function FlatsPage() {
       }
     };
     fetchFlats();
-  }, []);
+  }, [filters.city]);
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-extrabold mb-8 text-center">
-        Find Roommates in {filters.city || "Noida"}
+        {filters.city ? `Find Roommates in ${filters.city}` : "Find Roomates"}
       </h1>
 
       <div className="mb-8">

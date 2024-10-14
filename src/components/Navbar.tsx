@@ -20,7 +20,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-white shadow-md py-4">
+    <nav className="bg-white py-4">
       <div className="container mx-auto flex items-center justify-between">
         {/* Home button visible to everyone */}
         <Link href="/">
