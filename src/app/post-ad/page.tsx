@@ -74,7 +74,7 @@ export default function PostAdForm() {
         URL.createObjectURL(file)
       );
       setImagePreviewUrls((prevUrls) => [...prevUrls, ...newImageUrls]);
-      form.setValue("images", files);
+      form.setValue("images", Array.from(files));
     }
   };
 

@@ -1,14 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
-import Flat from "@/models/Flat"; // We will define the Flat model later
+import Flat from "@/models/Flat";
 import { getServerSession } from "next-auth";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { authOptions } from "@/lib/authOptions";
 
-// POST request to create a new ad
 export async function POST(req: NextRequest) {
   try {
-    // Ensure the user is authenticated
     const session = await getServerSession(authOptions);
 
     if (!session) {
@@ -17,7 +14,6 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
 
-    // Destructure form data
     const { city, rent, genderPreference, description, images } = body;
     const postedBy = {
       name: "aaryan",
@@ -25,17 +21,15 @@ export async function POST(req: NextRequest) {
       contactNumber: "9475756361",
     };
 
-    // Connect to MongoDB
     await dbConnect();
 
-    // Create a new flat ad
     const newFlat = new Flat({
-      ownerId: session.user.id, // Get the user ID from the session
+      ownerId: session.user.id,
       city,
       rent,
       genderPreference,
       description,
-      images, // Array of image URLs
+      images,
       postedBy,
     });
 
