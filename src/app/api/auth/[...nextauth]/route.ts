@@ -1,10 +1,10 @@
-// src/app/api/auth/[...nextauth]/route.ts
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import dbConnect from "@/lib/mongodb";
 import User, { IUser } from "@/models/User";
 
-export const authOptions = {
+// Define auth options directly in the handler
+const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -12,7 +12,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user }) {
+    async signIn({ user }: { user: any }) {
       await dbConnect();
 
       const existingUser = await User.findOne({ email: user.email });
@@ -40,6 +40,7 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
+// Use the NextAuth function for GET and POST requests
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
