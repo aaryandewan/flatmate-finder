@@ -23,6 +23,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation"; // Import useRouter
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
@@ -70,6 +71,7 @@ const hobbyOptions = [
 export default function EditProfileForm({ user }: { user: any }) {
   const { data: session } = useSession(); // Get the session
   const { toast } = useToast(); // To show toast notifications
+  const router = useRouter();
 
   // Pre-fill the form with existing data
   const form = useForm<z.infer<typeof formSchema>>({
@@ -147,6 +149,7 @@ export default function EditProfileForm({ user }: { user: any }) {
         });
         console.log("Profile updated:", response.data);
         setIsBusy(false);
+        router.refresh();
       })
       .catch((error) => {
         toast({
