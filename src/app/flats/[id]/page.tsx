@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
 import axios from "axios";
 import {
   ArrowLeft,
@@ -25,6 +27,8 @@ export default function FlatDetailsPage({
 }: {
   params: { id: string };
 }) {
+  const { data: session } = useSession();
+
   const router = useRouter();
   const [flatData, setFlatData] = useState<any | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -71,7 +75,7 @@ export default function FlatDetailsPage({
         </Link>
         <Badge variant="secondary">{flatData.genderPreference}</Badge>
       </div>
-
+      {/* <p>User ID: {session?.user.id}</p> */}
       <div className="grid gap-8 md:grid-cols-2">
         <div className="md:col-span-2">
           <div className="flex items-center justify-between">
@@ -137,17 +141,17 @@ export default function FlatDetailsPage({
         <div className="md:col-start-2 space-y-4">
           <Button asChild className="w-full">
             {/* <a href={`tel:${flatData.postedBy.contactNumber}`}> */}
-            <a href={`tel:964651231}`}>
-              <Phone className="mr-2 h-4 w-4" />
-              Call Owner
-            </a>
-          </Button>
-          <Button asChild variant="secondary" className="w-full">
-            <a href={`mailto:aaryandewan@google.com`}>
-              {/* <a href={`mailto:${flatData.postedBy.email}`}> */}
-              <Mail className="mr-2 h-4 w-4" />
-              Email Owner
-            </a>
+            <Link
+              href={{
+                pathname: "/message",
+                query: {
+                  senderId: session?.user.id,
+                  ownerId: flatData.ownerId,
+                },
+              }}
+            >
+              Message Owner
+            </Link>
           </Button>
         </div>
       </div>
