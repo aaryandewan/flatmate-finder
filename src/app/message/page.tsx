@@ -30,7 +30,7 @@ export default function NewMessage() {
         receiverId: ownerId,
         content: message,
       });
-      console.log("Sending message:", message);
+      console.log("Sending message: ", message);
       setMessage("");
       toast({
         description: "Message sent",
