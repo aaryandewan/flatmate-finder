@@ -41,7 +41,7 @@ export default function NewMessage() {
   };
 
   useEffect(() => {
-    const newSocket = io("http://localhost:5000");
+    const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_SERVER);
     setSocket(newSocket);
 
     if (senderId && ownerId) {

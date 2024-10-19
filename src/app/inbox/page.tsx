@@ -33,10 +33,11 @@ export default function InboxPage() {
   const [activeChat, setActiveChat] = useState<Conversation | null>(null);
   const [newMessage, setNewMessage] = useState("");
   const [socket, setSocket] = useState<Socket | null>(null);
+  // console.log("AARYAN USE EFFECT", process.env.SOCKET_SERVER);
 
   // Initialize the socket connection when the component mounts
   useEffect(() => {
-    const newSocket = io("http://localhost:5000"); // Ensure to use your deployed backend URL if necessary
+    const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_SERVER); // Ensure to use your deployed backend URL if necessary
     setSocket(newSocket);
 
     // Fetch conversations when the session is ready
