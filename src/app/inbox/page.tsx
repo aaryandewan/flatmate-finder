@@ -145,14 +145,14 @@ export default function InboxPage() {
   }, [socket, activeChat]);
 
   return (
-    <div className="flex h-screen bg-background">
-      <div className="grid w-full lg:grid-cols-[300px_1fr]">
+    <div className="flex h-[calc(100vh-4rem)] bg-background">
+      <div className="w-full flex">
         {/* Left Panel - Conversation List */}
-        <div className="border-r">
+        <div className="w-1/3 border-r flex flex-col">
           <div className="p-4 border-b">
             <h2 className="text-2xl font-semibold">Inbox</h2>
           </div>
-          <ScrollArea className="h-[calc(100vh-5rem)]">
+          <ScrollArea className="flex-grow">
             {conversations?.map((conversation) => (
               <div
                 key={conversation._id}
@@ -177,7 +177,7 @@ export default function InboxPage() {
         </div>
 
         {/* Right Panel - Active Chat or No Chat Selected */}
-        <div className="flex flex-col">
+        <div className="w-2/3 flex flex-col">
           {activeChat ? (
             <>
               {/* Chat Header */}

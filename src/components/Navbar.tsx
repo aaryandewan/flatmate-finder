@@ -24,18 +24,25 @@ export default function Navbar() {
       <div className="container mx-auto flex items-center justify-between">
         {/* Home button visible to everyone */}
         <Link href="/">
-          <Button variant="link" className="text-xl font-bold">
+          <Button variant="ghost" className="text-xl font-bold">
             Home
           </Button>
         </Link>
 
-        {/* Right side: Post an Ad and Profile dropdown */}
+        {/* Right side: Post an Ad, Inbox, and Profile dropdown */}
         <div className="flex items-center space-x-4">
-          {/* Post an Ad button visible only if user is signed in */}
+          {/* Post an Ad and Inbox buttons visible only if user is signed in */}
           {session && (
-            <Link href="/post-ad">
-              <Button className="text-md">Post an Ad</Button>
-            </Link>
+            <>
+              <Link href="/post-ad">
+                <Button className="text-md">Post an Ad</Button>
+              </Link>
+              <Link href="/inbox">
+                <Button variant="ghost" className="text-md">
+                  Inbox
+                </Button>
+              </Link>
+            </>
           )}
 
           {/* Profile dropdown visible only if user is signed in */}
